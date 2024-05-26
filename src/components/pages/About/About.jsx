@@ -1,19 +1,36 @@
+import person from "../../../assets/images/about_us/person.jpg";
+import parts from "../../../assets/images/about_us/parts.jpg";
+
 const About = () => {
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col lg:flex-row">
-        <img
-          src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
-          className="max-w-sm rounded-lg shadow-2xl"
-        />
-        <div>
-          <h1 className="text-5xl font-bold">Box Office News!</h1>
+    <div className="hero min-h-[600px]">
+      <div className="hero-content flex-col lg:flex-row ">
+        <div className="lg:w-1/2 relative">
+          {" "}
+          <img src={person} className="w-3/4 rounded-lg shadow-2xl" />
+          <img
+            src={parts}
+            className="w-1/2 absolute rounded-lg shadow-2xl right-5 top-1/2 border-8 border-white"
+          />
+        </div>
+
+        <div className="lg:w-1/2">
+          <p className="text-xl text-red-400 font-bold">About Us</p>
+          <h1 className="text-5xl font-bold">
+            We are qualified <br /> & of experience <br /> in this field
+          </h1>
           <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+            There are many variations of passages of Lorem Ipsum available, but
+            the majority have suffered alteration in some form, by injected
+            humour, or randomised words which do not look even slightly
+            believable.
           </p>
-          <button className="btn btn-primary">Get Started</button>
+          <p className="py-6">
+            The majority have suffered alteration in some form, by injected
+            humour, or randomised words which do not look even slightly
+            believable.
+          </p>
+          <button className="btn btn-warning">Get More Info</button>
         </div>
       </div>
     </div>
