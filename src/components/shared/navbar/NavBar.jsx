@@ -1,14 +1,20 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
+import { useContext } from "react";
+import { AuthContext } from "../../../provider/AuthProvider";
 
 const NavBar = () => {
+  const {user} = useContext(AuthContext)
   const navItem = (
     <>
       <li>
         <NavLink to='/'>Item 1</NavLink>
       </li>
       <li>
-        <NavLink to='home'>Item 1</NavLink>
+        <NavLink to='/login'>Login</NavLink>
+      </li>
+      <li>
+        <NavLink to='/signUp'>SignUp</NavLink>
       </li>
     </>
   );
@@ -47,6 +53,7 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1">{navItem}</ul>
       </div>
       <div className="navbar-end">
+      <p className=" text-orange-600 p-4 m-4 font-bold uppercase">{user.email}</p>
       <button className="btn btn-outline btn-error hover:text-white">Appointment</button>
       </div>
     </div>

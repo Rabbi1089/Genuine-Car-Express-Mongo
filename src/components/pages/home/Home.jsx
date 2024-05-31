@@ -9,6 +9,7 @@ const Home = () => {
             <Slider />
             <About />
             <Service />
+            <h1 className=" text-6xl text-red-700">This is for testing purpose</h1>
         </div>
     );
 };
