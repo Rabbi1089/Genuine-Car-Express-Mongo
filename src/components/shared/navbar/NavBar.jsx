@@ -53,8 +53,10 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1">{navItem}</ul>
       </div>
       <div className="navbar-end">
-      {/* <p className=" text-orange-600 p-4 m-4 font-bold uppercase">{user.email }</p> */}
-      <button className="btn btn-outline btn-error hover:text-white">Appointment</button>
+      {user&& 
+      
+      <p className=" text-orange-600 p-4 m-4 font-bold uppercase">{user.email }</p>}
+      <button className="btn btn-outline btn-error hover:text-white">Himel</button>
       </div>
     </div>
   );
