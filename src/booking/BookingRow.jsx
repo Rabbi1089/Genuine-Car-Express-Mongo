@@ -1,8 +1,9 @@
 import { data } from "autoprefixer";
 import React from "react";
 
-const BookingRow = ({ books, handleDelete}) => {
-  const { customerName, email, date, serviceName, img, price , _id } = books;
+const BookingRow = ({ books, handleDelete , handleBookingConfirmed , index}) => {
+  const { customerName, email, date, serviceName, img, price , _id  , status} = books;
+
 
 
 
@@ -10,6 +11,7 @@ const BookingRow = ({ books, handleDelete}) => {
     <tbody>
       {/* row 1 */}
       <tr>
+      <td>{index+1}</td>
         <th>
           <button className="btn btn-square text-red-500 " onClick={() =>handleDelete(_id)}>
             <svg
@@ -40,8 +42,12 @@ const BookingRow = ({ books, handleDelete}) => {
         <td>{email}</td>
         <td>{date}</td>
         <td>{price}</td>
+        
         <td>
-          <button className="btn btn-outline btn-accent">Details</button>
+        {status ? <span className=" text-blue-600">Confirmed</span> :
+         <button onClick={() => handleBookingConfirmed(_id)} className="btn btn-outline btn-accent">Please Confirm</button>
+        }
+          
         </td>
       </tr>
     </tbody>

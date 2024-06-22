@@ -26,7 +26,7 @@ const NavBar = () => {
         <><li>
           <NavLink to="/Bookings">Bookings</NavLink>
         </li><NavLink>
-            <button className="btn bg-white" onClick={handleLogout}>Logout</button>
+            <button className="btn bg-white btn-sm font-thin hover:bg-none" onClick={handleLogout}>Logout</button>
           </NavLink></>
     
       ) : (

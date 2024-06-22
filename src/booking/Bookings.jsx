@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import TableRow from "./TableRow.jsx/TableRow";
 import BookingRow from "./BookingRow";
+import { json } from "react-router-dom";
 
 const Bookings = () => {
 
@@ -34,6 +35,25 @@ const Bookings = () => {
       }
     }
 
+    const handleBookingConfirmed = id => {
+      fetch(`http://localhost:5000/booking/${id}` , { method : 'PATCH',
+        headers : {'content-type' : 'application/json'},
+        body : JSON.stringify({ status : 'confirm'})
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        if (data.modifiedCount > 0) {
+          const remaining = booking.filter(booking => booking._id !== id);
+          const updated = booking.find(booking => booking._id === id);
+          updated.status = 'confirm'
+          const newBooking = [updated, ...remaining]
+          setBooking(newBooking)
+          
+        }
+      })
+    }
+
     return (
         <div>
             <h1 className=" text-2xl font-semibold text-center text-blue-500 p-4 uppercase"> your total services : {booking.length}</h1>
@@ -43,6 +63,8 @@ const Bookings = () => {
     {/* head */}
     <thead>
       <tr>
+        <th>Serial</th>
+        <th>Delete</th>
         <th></th>
         <th>ServiceName</th>
         <th>Email</th>
@@ -51,7 +73,10 @@ const Bookings = () => {
         <th></th>
       </tr>
     </thead>
-        {booking.map(books=><BookingRow key={books._id} books = {books} handleDelete={handleDelete}></BookingRow>)}
+        {booking.map((books , index)=><BookingRow 
+        key={books._id} books = {books} handleDelete={handleDelete} 
+        handleBookingConfirmed={handleBookingConfirmed} index={index}>
+        </BookingRow>)}
   </table>
 </div>
         </div>
