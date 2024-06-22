@@ -4,17 +4,43 @@ import { useContext } from "react";
 import { AuthContext } from "../../../provider/AuthProvider";
 
 const NavBar = () => {
-  const {user} = useContext(AuthContext)
+  const { user , logOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut()
+    .then(() => {
+      // Sign-out successful.
+    }).catch((error) =>  {
+      console.log(error)
+    });
+  }
+
   const navItem = (
     <>
       <li>
-        <NavLink to='/'>Item 1</NavLink>
+        <NavLink to="/">Item 1</NavLink>
+      </li>
+
+      {user?.email ? (
+        
+        <><li>
+          <NavLink to="/Bookings">Bookings</NavLink>
+        </li><NavLink>
+            <button className="btn bg-white" onClick={handleLogout}>Logout</button>
+          </NavLink></>
+    
+      ) : (
+        <li>
+          {" "}
+          <NavLink to="/login">Login</NavLink>
+        </li>
+      )}
+
+      <li>
+        <NavLink to="/signUp">SignUp</NavLink>
       </li>
       <li>
-        <NavLink to='/login'>Login</NavLink>
-      </li>
-      <li>
-        <NavLink to='/signUp'>SignUp</NavLink>
+        <NavLink to="/Checkout">Checkout</NavLink>
       </li>
     </>
   );
@@ -53,10 +79,14 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1">{navItem}</ul>
       </div>
       <div className="navbar-end">
-      {user&& 
-      
-      <p className=" text-orange-600 p-4 m-4 font-bold uppercase">{user.email }</p>}
-      <button className="btn btn-outline btn-error hover:text-white">Himel</button>
+        {user && (
+          <p className=" text-orange-600 p-4 m-4 font-bold uppercase">
+            {user.email}
+          </p>
+        )}
+        <button className="btn btn-outline btn-error hover:text-white">
+          Himel
+        </button>
       </div>
     </div>
   );
