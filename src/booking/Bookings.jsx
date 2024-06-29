@@ -3,17 +3,26 @@ import { AuthContext } from "../provider/AuthProvider";
 import TableRow from "./TableRow.jsx/TableRow";
 import BookingRow from "./BookingRow";
 import { json } from "react-router-dom";
+import axios from "axios";
 
 const Bookings = () => {
 
     const {user} = useContext(AuthContext);
     const [booking , setBooking] = useState([])
     const url = `http://localhost:5000/bookings?email=${user.email}`
+
+
     useEffect(() =>{
-        fetch(url)
-        .then(res => res.json())
-        .then(data => setBooking(data))
-    } , [url]);
+    //     fetch(url)
+    //     .then(res => res.json())
+    //     .then(data => setBooking(data))
+
+    axios.get(url, {withCredentials : true})
+.then(res => {
+  setBooking(res.data)
+})
+    
+  } , [url]);
 
     const handleDelete = id => {
       const proceed = confirm('Are you sure');

@@ -1,15 +1,16 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
 import { useContext } from "react";
 import { AuthContext } from "../../../provider/AuthProvider";
 
 const NavBar = () => {
   const { user , logOut } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logOut()
     .then(() => {
-      // Sign-out successful.
+      navigate( '/')
     }).catch((error) =>  {
       console.log(error)
     });
@@ -39,9 +40,7 @@ const NavBar = () => {
       <li>
         <NavLink to="/signUp">SignUp</NavLink>
       </li>
-      <li>
-        <NavLink to="/Checkout">Checkout</NavLink>
-      </li>
+
     </>
   );
   return (
