@@ -4,12 +4,18 @@ import TableRow from "./TableRow.jsx/TableRow";
 import BookingRow from "./BookingRow";
 import { json } from "react-router-dom";
 import axios from "axios";
+import useAuth from "../hook/useAuth";
+import useAxiosSecure from "../hook/useAxiosSecure";
+import { data } from "autoprefixer";
 
 const Bookings = () => {
 
-    const {user} = useContext(AuthContext);
+    const {user} = useAuth()
     const [booking , setBooking] = useState([])
-    const url = `http://localhost:5000/bookings?email=${user.email}`
+    const axiosSecure = useAxiosSecure() 
+
+   // const url = `http://localhost:5000/bookings?email=${user.email}`
+    const url = `/bookings?email=${user.email}`
 
 
     useEffect(() =>{
@@ -17,12 +23,11 @@ const Bookings = () => {
     //     .then(res => res.json())
     //     .then(data => setBooking(data))
 
-    axios.get(url, {withCredentials : true})
-.then(res => {
-  setBooking(res.data)
-})
-    
-  } , [url]);
+    axiosSecure.get(url)
+    .then(res => setBooking(res.data))
+  } , [url , axiosSecure])
+
+  
 
     const handleDelete = id => {
       const proceed = confirm('Are you sure');

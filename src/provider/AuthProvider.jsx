@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
+import axios from "axios";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
@@ -16,32 +17,48 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const signIn = (email, password) => {
-    setLoading(true)
-    return signInWithEmailAndPassword(auth, email, password)
-  }
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
   const logOut = () => {
-    setLoading(true)
-    return signOut(auth)
-  }
+    setLoading(true);
+    return signOut(auth);
+  };
 
   const createUser = (email, password) => {
-    setLoading(true)
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   useEffect(() => {
-   const unsubscribe =  onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      const userEmail = currentUser?.email || user?.email;
+      const loggedUser = { email: userEmail };
+      setUser(currentUser);
+      setLoading(false);
+      //create token
       if (currentUser) {
-        setUser(currentUser);
-        setLoading(false)
+        axios
+          .post("http://localhost:5000/jwt", loggedUser, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log("Token response", res.data);
+          });
+      }else{
+        axios.post("http://localhost:5000/logout", loggedUser, {
+          withCredentials : true,
+        })
+        .then(res => {
+          console.log(res.data)
+        })
       }
-
     });
-    
+
     return () => {
-      unsubscribe()
-    }
+      unsubscribe();
+    };
   }, []);
 
   const authInfo = {
@@ -50,7 +67,7 @@ const AuthProvider = ({ children }) => {
     createUser,
     signIn,
     setUser,
-    logOut
+    logOut,
   };
 
   return (
